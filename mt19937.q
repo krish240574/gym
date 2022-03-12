@@ -1,18 +1,41 @@
 / MT19937 - random number generator implementation
 / coefficients for MT19937-32 bit word-length
-w:32;n:624;m:397;r:31
-a:"0x9908B0DF" / use strings for hex values, hex2i converts to long
-u:11;d:"0xFFFFFFFF";s:7;b:"0x9D2C5680";t:15;c:"0xEFC60000";l:18;f:1812433253;
-MT:(n:624)#0;index:n+1;lm:"0x7FFFFFFF";um:"0x80000000"; 
+ MT19937 - random number generator implementation
+/ coefficients for MT19937-32 bit word-length
+\d .rng
+i.w:32;i.n:624;i.m:397;i.r:31;
+i.a:"0x9908B0DF" / use strings for hex values, hex2i converts to long
+i.u:11;i.d:"0xFFFFFFFF";i.s:7;i.b:"0x9D2C5680";i.t:15;i.c:"0xEFC60000";i.l:18;i.f:1812433253;
+i.MT:(i.n:624)#0;i.index:i.n+1;i.lm:"0x7FFFFFFF";i.um:"0x80000000";
 i2b:0b vs;
 b2i:0b sv;
-seed:{[seed]MT[0]:seed};
-h2i:{[hex] w:(ci:"i"$upper hex[2+til -2 + count hex])<=57;ci:@[ci;where w;:;-48+ci[where w]];ci:@[ci;where not w;:;-55+ci[where not w]];"j"$sum ci*(16 xexp reverse til -2+count hex)}
-init:{temp:"j"$x+f*b2i ((i2b MT[x-1])<>prev/[(w-2);(i2b MT[x-1])])w + til w;show x,temp;MT[x]:b2i (i2b temp)&(i2b h2i["0xffffffff"]);}
-twst:{g:(b2i (i2b MT[x])&(i2b h2i[um])) + b2i (i2b MT[(x+1) mod n])&(i2b h2i[lm]);xA:prev i2b g;$[0<>g mod 2;xA:xA<>(i2b g);];MT[x]::b2i (i2b MT[(x+m) mod n])<>(xA)}
-ex_num:{[]$[index>=n;[twst each til n;index::0];];y:i2b MT[index];y:y<>(i2b h2i[d])&prev/[u;y];y:y<>(i2b h2i[b])&next/[s;y];y:y<>(i2b h2i[c])&prev/[t;y];y:y<>next y;index+::1;:y&(i2b h2i["0xffffffff"])}
+i.iflg:0;
 
-/ Usage : 
-/ seed[seed];
-/ init each 1+til -1+n
-/ b2i ex_num[]
+seed:{[seed]i.MT[0]:seed};
+h2i:{[hex]
+ wr:(ci:"i"$upper hex[2+til -2 + count hex])<=57;
+ ci:@[ci;where wr;:;-48+ci[where wr]];
+ ci:@[ci;where not wr;:;-55+ci[where not wr]];
+ "j"$sum ci*(16 xexp reverse til -2+count hex)}
+
+i.init:{
+ temp:"j"$x+i.f*b2i ((i2b i.MT[x-1])<>prev/[(i.w-2);
+ (i2b i.MT[x-1])])i.w + til i.w;
+ i.MT[x]:b2i (i2b temp)&(i2b h2i["0xffffffff"])}
+
+i.twst:{
+ g:(b2i (i2b i.MT[x])&(i2b h2i[i.um])) + b2i (i2b i.MT[(x+1) mod i.n])&(i2b h2i[i.lm]);
+ xA:prev i2b g;
+ $[0<>g mod 2;xA:xA<>(i2b g);];
+ i.MT[x]:b2i (i2b i.MT[(x+i.m) mod i.n])<>xA}
+ex_num:{[sd]
+ $[0=i.iflg;[show "hello";seed[sd];i.init each 1+til -1+i.n;i.iflg::1];]; / call init only once
+ $[i.index>=i.n;[i.twst each til i.n;i.index::0];];
+ y:i2b i.MT[i.index];
+ y:y<>(i2b h2i[i.d])&prev/[i.u;y];
+ y:y<>(i2b h2i[i.b])&next/[i.s;y];
+ y:y<>(i2b h2i[i.c])&prev/[i.t;y];
+ y:y<>next y;i.index+::1;
+ :(i.MT[0],b2i y&(i2b h2i["0xffffffff"]))} /return the seed and generated number
+
+/ usage - .rng.ex_num[seed]
