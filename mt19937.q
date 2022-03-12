@@ -1,5 +1,5 @@
 / MT19937 - random number generator implementation
-/ coefficients for MT19937
+/ coefficients for MT19937-32 bit word-length
 w:32;n:624;m:397;r:31
 a:"0x9908B0DF" / use strings for hex values, hex2i converts to long
 hex2i:{[hex] 
