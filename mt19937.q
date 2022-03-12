@@ -17,13 +17,13 @@ i.init:{
  i.MT[x]:b2i (i2b temp)&(i2b h2i["0xffffffff"])}
 
 i.twst:{
- g:(b2i (i2b i.MT[x])&(i2b h2i[i.um])) + b2i (i2b i.MT[(x+1) mod i.n])&(i2b h2i[i.lm]);xA:prev i2b g;
+ g:(b2i (i2b i.MT[x])&(i2b h2i[i.um])) + b2i (i2b i.MT[(x+1) mod i.n])&(i2b h2i[i.lm]); xA:prev i2b g;
  $[0<>g mod 2;xA:xA<>(i2b g);]; i.MT[x]:b2i (i2b i.MT[(x+i.m) mod i.n])<>xA}
  
 ex_num:{[sd]
  $[0=i.iflg;[seed[sd];i.init each 1+til -1+i.n;i.iflg::1];]; / call init only once
  $[i.index>=i.n;[i.twst each til i.n;i.index::0];];
- y:i2b i.MT[i.index]; y:y<>(i2b h2i[i.d])&prev/[i.u;y]; y:y<>(i2b h2i[i.b])&next/[i.s;y]; y:y<>(i2b h2i[i.c])&prev/[i.t;y]; y:y<>next y;i.index+::1;
+ y:i2b i.MT[i.index]; y:y<>(i2b h2i[i.d])&prev/[i.u;y]; y:y<>(i2b h2i[i.b])&next/[i.s;y]; y:y<>(i2b h2i[i.c])&prev/[i.t;y]; y:y<>next y; i.index+:1;
  :(i.MT[0],b2i y&(i2b h2i["0xffffffff"]))} /return the seed and generated number
 
 / usage - .rng.ex_num[seed]
