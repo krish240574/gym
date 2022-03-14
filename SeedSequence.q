@@ -19,7 +19,7 @@ i.ifi:{[n]i.l:();$[0<n;i.l,:"j"$b2i (i2b n)&((i2b h2i["0xffffffff"]) idx);i.ifi[
 gz:{(&/)(0<) all x};
 ate: abs type each;
 at:{abs type x};
-/ Coerce to uint32
+/ Coerce to uint32 - need to implement the 64-bit part
 i.c2u32:{
  $[(0h=type x) & (gz x) & (6h=ate x)0;
   :x;
