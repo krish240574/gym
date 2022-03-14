@@ -19,6 +19,9 @@ i.ifi:{[n]i.l:();$[0<n;i.l,:"j"$b2i (i2b n)&((i2b h2i["0xffffffff"]) idx);i.ifi[
 gz:{(&/)(0<) all x};
 ate: abs type each;
 at:{abs type x};
+uint:"i"$;
+long:"j"$;
+
 / Coerce to uint32 - need to implement the 64-bit part
 i.c2u32:{
  $[(0h=type x) & (gz x) & (6h=ate x)0;
@@ -27,7 +30,7 @@ i.c2u32:{
    $["0x" in  enlist x 0 1;
      :h2i[x];
      $[x like raze (count x)#enlist"[0-9]";
-       :sum ("i"$(10 xexp reverse til count x))*(-48+"i"$x);
+       :sum (uint (10 xexp reverse til count x))*(-48+"i"$x);
       ];
     ];
    ]
@@ -35,10 +38,11 @@ i.c2u32:{
  $[(1=count x) & 6h=at x;
   i.ifi x 0;
   $[0=count x;
-   :"i"$();
-   i.c2u32 each enlist each x
+   :uint ();
+   i.c2u32 each enlist each uint x
    ]
   ]}
+
 
 
 
