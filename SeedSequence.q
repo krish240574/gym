@@ -36,7 +36,6 @@ i.init:{[e;pe;skey;psz]
  i.psz:psz;
  $[0=count e;i.e:abs i.grb[i.psz*32];]; 
  i.pe:pe;
- /i.skey:enlist skey;
  i.skey:skey;
  i.pool:psz#0;
  ae:getae[];
@@ -48,8 +47,7 @@ i.mixe:{[ae]
  / m[0]:'[;]/[(i.hash;i.ra)][ae 0];
  m:@[m;til i.psz;:;i.hash each i.ra each ae til i.psz];
  w::where each not t='(i.psz,i.psz)#t:til i.psz;
- ll:m; / not needed
- m:{[ll;x]:@[ll;w x;:;i.mix .'(ll w x),\:i.hash[ll x]]}[ll;]each t
+ m:{[ll;x]:@[ll;w x;:;i.mix .'(ll w x),\:i.hash[ll x]]}[m;]each t
  $[i.psz<count ae;
    [tmp:i.hash each ae i.psz + til (count ae)-i.psz;
    m i.mix/:\:tmp ];
