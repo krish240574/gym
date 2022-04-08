@@ -46,12 +46,15 @@ i.mixe:{[ae]
  show "inside mixe";
  m:i.hash each i.ra each ui i.pool;
  / m[0]:'[;]/[(i.hash;i.ra)][ae 0];
- m:@[m;til count ae;:;i.hash each i.ra each ae];
- t:til i.psz;
- k:t,'(i.psz,i.psz)#t;
- w::where each not k[;0]='k[;1+t];
- ll:m;
- {[ll;x]ll:@[ll;w x;:;i.mix .'(ll w x),\:i.hash[ll x]]}[ll;]each til count i.pool};
+ m:@[m;til i.psz;:;i.hash each i.ra each ae til i.psz];
+ w::where each not t='(i.psz,i.psz)#t:til i.psz;
+ ll:m; / not needed
+ m:{[ll;x]:@[ll;w x;:;i.mix .'(ll w x),\:i.hash[ll x]]}[ll;]each t
+ $[i.psz<count ae;
+   [tmp:i.hash each ae i.psz + til (count ae)-i.psz;
+   m i.mix/:\:tmp ];
+  ];
+ };
 
 getae:{
  re:i.c2u32[i.e];
