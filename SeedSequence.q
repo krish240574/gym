@@ -42,7 +42,6 @@ i.init:{[e;pe;skey;psz]
  i.mixe[ae]};
 
 i.mixe:{[ae]
- show "inside mixe";
  m:i.hash each i.ra each ui i.pool;
  / m[0]:'[;]/[(i.hash;i.ra)][ae 0];
  m:@[m;til i.psz;:;i.hash each i.ra each ae til i.psz];
@@ -50,7 +49,7 @@ i.mixe:{[ae]
  m:{[ll;x]:@[ll;w x;:;i.mix .'(ll w x),\:i.hash[ll x]]}[m;]each t
  $[i.psz<count ae;
    [tmp:i.hash each ae i.psz + til (count ae)-i.psz;
-   m i.mix/:\:tmp ];
+   i.pool i.mix/:\:tmp ];
   ];
  };
 
