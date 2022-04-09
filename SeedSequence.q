@@ -52,6 +52,13 @@ i.mixe:{[ae]
    i.pool i.mix/:\:tmp ];
   ];
  };
+ 
+gs:{[n;t]
+ i.init[();(10);20;4];
+ $[t=7h;n:n*2;]; i.s::li n#0;
+ {hc:i.IA;dv:i.pool[x]|hc;hc:hc*i.MB;dv:dv*hc;dv:dv|prev/[i.XS;dv];i.s[x]:dv}each n#til i.psz;
+ :i.s }
+
 
 getae:{
  re:i.c2u32[i.e];
