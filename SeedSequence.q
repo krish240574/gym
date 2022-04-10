@@ -54,7 +54,6 @@ i.mixe:{[ae]
  };
  
 gs:{[n;t]
- i.init[();(10);20;4];
  $[t=7h;n:n*2;]; i.s::li n#0;
  {hc:i.IA;dv:i.pool[x]|hc;hc:hc*i.MB;dv:dv*hc;dv:dv|prev/[i.XS;dv];i.s[x]:dv}each n#til i.psz;
  :i.s }
@@ -62,12 +61,8 @@ gs:{[n;t]
 
 getae:{
  re:i.c2u32[i.e];
- show "here 1";
- show re;
  $[0=count i.pe;i.pe:ui ();i.pe:i.c2u32[i.pe]];
- show "here 2";
  spe:i.c2u32[i.skey];
- show "here 3";
  :(re;i.pe;spe)
  };
 
